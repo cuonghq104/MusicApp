@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="1dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/iv_top_song"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:id="@+id/tv_top_song_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="Black Beatles (feat. Gucci Mane)"
+                android:layout_alignTop="@id/iv_top_song"
+                android:layout_toRightOf="@id/iv_top_song"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_top_song_artist"
+                android:textSize="16sp"
+                android:layout_alignLeft="@id/tv_top_song_name"
+                android:text="Rae sremmund"
+                android:layout_below="@id/tv_top_song_name"
+                android:layout_marginTop="5dp"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

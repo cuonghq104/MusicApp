@@ -1,0 +1,105 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.TopSongFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <techkids.cuong.finallab2.viewcompounds.HalfScreenImageView
+            android:id="@+id/iv_genre_ts"
+            android:src="@drawable/genre_2x_4"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:background="@drawable/gradient_reverse"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <ImageButton
+                android:id="@+id/bt_back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/back"
+                android:layout_centerVertical="true"/>
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/bt_share"
+                android:background="@drawable/share"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/bt_favorite"
+                android:layout_centerVertical="true"
+                android:background="@drawable/unfavorite"
+                android:layout_toLeftOf="@id/bt_share"
+                android:layout_marginRight="20dp"/>
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/bt_search"
+                android:background="@drawable/share"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/bt_favorite"
+                android:layout_marginRight="20dp"/>
+        </RelativeLayout>
+
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fb_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/play"
+            app:fabSize="normal" />
+
+        <LinearLayout
+            android:layout_below="@id/iv_genre_ts"
+            android:id="@+id/ll_genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/tv_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Genre name"/>
+
+            <TextView
+                android:id="@+id/tv_number_of_songs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Number of songs"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_top_songs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ll_genre">
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+
+</FrameLayout>
