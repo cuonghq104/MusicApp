@@ -41,6 +41,7 @@ public class GenreListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        setupUI();
     }
 
     @Override
@@ -59,7 +60,6 @@ public class GenreListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_genre_list, container, false);
         ButterKnife.bind(this, view);
-        setupUI();
         return view;
     }
 

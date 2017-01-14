@@ -23,6 +23,12 @@ public class DbContext {
         realm.commitTransaction();
     }
 
+    public void changeFavorite(Genre genre) {
+        realm.beginTransaction();
+        genre.changeFavorite();
+        realm.commitTransaction();
+    }
+
     public RealmResults<Genre> getAllGenre() {
         return realm.where(Genre.class).findAll();
     }

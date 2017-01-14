@@ -1,6 +1,7 @@
 package techkids.cuong.finallab2.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,9 +9,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,13 +38,18 @@ import techkids.cuong.finallab2.R;
 import techkids.cuong.finallab2.databases.DbContext;
 import techkids.cuong.finallab2.events.ChangeFragmentEvent;
 import techkids.cuong.finallab2.events.HideToolbarEvent;
+import techkids.cuong.finallab2.events.PlayMusicEvent;
+import techkids.cuong.finallab2.events.ReadyEvent;
 import techkids.cuong.finallab2.fragments.GenreListFragment;
 import techkids.cuong.finallab2.fragments.StartFragment;
 import techkids.cuong.finallab2.models.Genre;
 import techkids.cuong.finallab2.models.ListGenre;
+import techkids.cuong.finallab2.models.SongList;
 import techkids.cuong.finallab2.networks.models.Module;
+import techkids.cuong.finallab2.networks.models.Song;
 import techkids.cuong.finallab2.networks.models.SubGenre;
 import techkids.cuong.finallab2.networks.services.GetGenreService;
+import techkids.cuong.finallab2.transforms.CircleTransform;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +60,21 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.gap)
     View gap;
 
+    @BindView(R.id.rl_play)
+    RelativeLayout rlPlay;
+
+    @BindView(R.id.tv_name)
+    TextView tvName;
+
+    @BindView(R.id.tv_artist)
+    TextView tvArtist;
+
+    @BindView(R.id.iv_song)
+    ImageView ivSong;
+
+    @BindView(R.id.fb_play)
+    FloatingActionButton fbPlay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +82,13 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
-        getDataFromInternet();
+        getDataFromRealm();
+        Toast.makeText(MainActivity.this, String.format("%d", ListGenre.getList().size()), Toast.LENGTH_SHORT).show();
+
+        if (ListGenre.getList().size() == 0) {
+            getDataFromInternet();
+        }
+//        getDataFromInternet();
     }
 
     @Override
@@ -70,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+//        DbContext.getInstance().removeAllGenre();
+//        for (Genre genre : ListGenre.getList()) {
+//            DbContext.getInstance().insert(genre);
+//        }
     }
 
     private void getDataFromRealm() {
@@ -119,19 +154,19 @@ public class MainActivity extends AppCompatActivity {
                     for (SubGenre subGenre : moduleMusic.getSubGenres()) {
                         ListGenre.add(Genre.create(subGenre.getId(), subGenre.getTranslationKey()));
                     }
-
+                    EventBus.getDefault().post(new ReadyEvent(true));
 
                 }
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (Genre genre : ListGenre.getList()) {
-                            DbContext.getInstance().insert(genre);
-                        }
-                        changeFragment(new StartFragment(), false);
-                    }
-                });
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        for (Genre genre : ListGenre.getList()) {
+//                            DbContext.getInstance().insert(genre);
+//                        }
+//                        changeFragment(new StartFragment(), false);
+//                    }
+//                });
             }
 
             @Override
@@ -191,4 +226,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Subscribe
+    public void onReadyEvent(ReadyEvent readyEvent) {
+        if (readyEvent.isReady()) {
+            for (Genre genre : ListGenre.getList()) {
+                DbContext.getInstance().insert(genre);
+            }
+            changeFragment(new StartFragment(), false);
+        }
+     }
+
+    @Subscribe
+    public void onPlayMusicEvent(PlayMusicEvent playMusicEvent) {
+        if (playMusicEvent.isPlayMusic()) {
+            rlPlay.setVisibility(View.VISIBLE);
+        }
+
+        int position = playMusicEvent.getPosition();
+
+        Song song = SongList.list.get(position);
+
+        tvName.setText(song.getSongName().getLabel());
+
+        tvArtist.setText(song.getSongArtist().getLabel());
+
+        Picasso.with(this).load(song.getSongImage()[2].getLabel()).transform(new CircleTransform()).into(ivSong);
+
+        fbPlay.setImageResource(R.drawable.play);
+    }
 }

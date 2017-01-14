@@ -11,6 +11,8 @@ public class Genre extends RealmObject{
 
     private String name;
 
+    private boolean favorite;
+
     public String getId() {
         return id;
     }
@@ -23,6 +25,19 @@ public class Genre extends RealmObject{
         Genre genre = new Genre();
         genre.id = id;
         genre.name = name;
+        genre.favorite = false;
         return genre;
+    }
+
+    public void changeFavorite() {
+        if (favorite) {
+            favorite = false;
+        } else {
+            favorite = true;
+        }
+    }
+
+    public boolean isFavorite() {
+        return favorite;
     }
 }

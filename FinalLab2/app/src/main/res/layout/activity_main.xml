@@ -23,20 +23,89 @@
     </android.support.design.widget.AppBarLayout>
     <!--Code here-->
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <View
-            android:id="@+id/gap"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"/>
+            android:layout_height="match_parent">
 
-       <FrameLayout
-           android:id="@+id/fl_container"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"/>
+            <View
+                android:id="@+id/gap"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"/>
+
+            <FrameLayout
+                android:id="@+id/fl_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_play"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sb_player"
+                app:dsb_indicatorPopupEnabled="false"
+                app:dsb_trackColor="@color/black"
+                app:dsb_scrubberHeight="5dp"
+                app:dsb_trackHeight="5dp"
+                app:dsb_thumbSize="0dp"/>
+
+            <RelativeLayout
+                android:layout_below="@id/sb_player"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_song"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="name"
+                    android:id="@+id/tv_name"
+                    android:layout_alignTop="@id/iv_song"
+                    android:layout_toRightOf="@id/iv_song"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_artist"
+                    android:layout_below="@id/tv_name"
+                    android:layout_alignLeft="@id/tv_name"
+                    android:text="artist"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="5sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <android.support.design.widget.FloatingActionButton
+                    app:fabSize="mini"
+                    android:src="@drawable/play"
+                    android:id="@+id/fb_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

@@ -26,6 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import techkids.cuong.finallab2.R;
 import techkids.cuong.finallab2.adapters.TopSongAdapter;
+import techkids.cuong.finallab2.databases.DbContext;
 import techkids.cuong.finallab2.events.ChangeFragmentEvent;
 import techkids.cuong.finallab2.events.HideToolbarEvent;
 import techkids.cuong.finallab2.models.Genre;
@@ -136,18 +137,35 @@ public class TopSongFragment extends Fragment {
         position = bundle.getInt(ListGenre.POSITION);
         Genre genre = ListGenre.getList().get(position);
 
+        if (genre.isFavorite()) {
+            btFavorite.setImageResource(R.drawable.favorite);
+        } else {
+            btFavorite.setImageResource(R.drawable.unfavorite);
+        }
+
         String uri = String.format("genre_2x_%s", genre.getId());
 
         int imageResource = getContext().getResources().getIdentifier(uri, "drawable", getContext().getPackageName());
 
         ivGenre.setImageResource(imageResource);
 
-        tvGenre.setText(genre.getName());
+        tvGenre.setText(genre.getName().toUpperCase());
 
     }
 
     @OnClick(R.id.bt_back)
     public void backToGenreFragment() {
         EventBus.getDefault().post(new ChangeFragmentEvent(new StartFragment(), false, position));
+    }
+
+    @OnClick(R.id.bt_favorite)
+    public void onFavoriteClick() {
+        Genre genre = ListGenre.getList().get(position);
+        DbContext.getInstance().changeFavorite(genre);
+        if (genre.isFavorite()) {
+            btFavorite.setImageResource(R.drawable.favorite);
+        } else {
+            btFavorite.setImageResource(R.drawable.unfavorite);
+        }
     }
 }
