@@ -2,12 +2,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.PlaylistFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="techkids.cuong.finallab2_remake.fragments.PlaylistFragment">
 
-    <ListView
-        android:id="@+id/lv_favorite"
+    <RelativeLayout
+        android:id="@+id/rl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </ListView>
+
+        <techkids.cuong.finallab2_remake.viewcompounds.HalfScreenImageView
+            android:id="@+id/iv_genre_ts"
+            android:src="@drawable/genre_2x_4"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fb_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/play"
+            app:fabSize="normal" />
+
+        <LinearLayout
+            android:layout_below="@id/iv_genre_ts"
+            android:id="@+id/ll_genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/tv_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Genre name"/>
+
+            <TextView
+                android:id="@+id/tv_number_of_songs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Number of songs"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_top_songs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ll_genre">
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 
 </FrameLayout>
